@@ -1529,8 +1529,11 @@ static int DoDamageMobj(AActor *target, AActor *inflictor, AActor *source, int d
 
 	if (realdamage > 0 && needevent)
 	{
+		int damage = realdamage;
 		// [ZZ] event handlers only need the resultant damage (they can't do anything about it anyway)
-		target->Level->localEventManager->WorldThingDamaged(target, inflictor, source, realdamage, mod, flags, angle);
+		damage = target->Level->localEventManager->WorldThingDamaged(target, inflictor, source, realdamage, mod, flags, angle);
+
+		return max(0, damage);
 	}
 
 	return max(0, realdamage);

@@ -788,16 +788,18 @@ void EventManager::WorldThingRevived(AActor* actor)
 		handler->WorldThingRevived(actor);
 }
 
-void EventManager::WorldThingDamaged(AActor* actor, AActor* inflictor, AActor* source, int damage, FName mod, int flags, DAngle angle)
+int EventManager::WorldThingDamaged(AActor* actor, AActor* inflictor, AActor* source, int damage, FName mod, int flags, DAngle angle)
 {
 	// don't call anything if actor was destroyed on PostBeginPlay/BeginPlay/whatever.
 	if (actor->ObjectFlags & OF_EuthanizeMe)
-		return;
+		return damage;
 
 	if (ShouldCallStatic(true)) staticEventManager.WorldThingDamaged(actor, inflictor, source, damage, mod, flags, angle);
+	
 
 	for (DStaticEventHandler* handler = FirstEventHandler; handler; handler = handler->next)
-		handler->WorldThingDamaged(actor, inflictor, source, damage, mod, flags, angle);
+		damage = handler->WorldThingDamaged(actor, inflictor, source, damage, mod, flags, angle);
+	return damage;
 }
 
 void EventManager::WorldThingDestroyed(AActor* actor)
@@ -1939,12 +1941,12 @@ void DStaticEventHandler::WorldThingRevived(AActor* actor)
 	}
 }
 
-void DStaticEventHandler::WorldThingDamaged(AActor* actor, AActor* inflictor, AActor* source, int damage, FName mod, int flags, DAngle angle)
+int DStaticEventHandler::WorldThingDamaged(AActor* actor, AActor* inflictor, AActor* source, int damage, FName mod, int flags, DAngle angle)
 {
 	IFVIRTUAL(DStaticEventHandler, WorldThingDamaged)
 	{
 		// don't create excessive DObjects if not going to be processed anyway
-		if (isEmpty(func)) return;
+		if (isEmpty(func)) return damage;
 		FWorldEvent e = owner->SetupWorldEvent();
 		e.Thing = actor;
 		e.Inflictor = inflictor;
@@ -1953,8 +1955,10 @@ void DStaticEventHandler::WorldThingDamaged(AActor* actor, AActor* inflictor, AA
 		e.DamageType = mod;
 		e.DamageFlags = flags;
 		e.DamageAngle = angle;
+		e.NewDamage = damage;
 		VMValue params[2] = { (DStaticEventHandler*)this, &e };
 		VMCall(func, params, 2, nullptr, 0);
+		return e.NewDamage;
 	}
 }
 

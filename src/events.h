@@ -310,7 +310,7 @@ public:
 	void WorldThingDied(AActor* actor, AActor* inflictor);
 	void WorldThingGround(AActor* actor, FState* st);
 	void WorldThingRevived(AActor* actor);
-	void WorldThingDamaged(AActor* actor, AActor* inflictor, AActor* source, int damage, FName mod, int flags, DAngle angle);
+	int WorldThingDamaged(AActor* actor, AActor* inflictor, AActor* source, int damage, FName mod, int flags, DAngle angle);
 	void WorldThingDestroyed(AActor* actor);
 	bool WorldHitscanPreFired(AActor* actor, DAngle angle, double distance, DAngle pitch, int damage, FName damageType, PClassActor *pufftype, int flags, double sz, double offsetforward, double offsetside);
 	bool WorldRailgunPreFired(FName damageType, PClassActor* pufftype, FRailParams* param);
@@ -496,7 +496,7 @@ struct EventManager
 	// called after AActor::Revive.
 	void WorldThingRevived(AActor* actor);
 	// called before P_DamageMobj and before AActor::DamageMobj virtuals.
-	void WorldThingDamaged(AActor* actor, AActor* inflictor, AActor* source, int damage, FName mod, int flags, DAngle angle);
+	int WorldThingDamaged(AActor* actor, AActor* inflictor, AActor* source, int damage, FName mod, int flags, DAngle angle);
 	// called before AActor::Destroy of each actor.
 	void WorldThingDestroyed(AActor* actor);
 	// called in P_ActivateLine before executing special, set shouldactivate to false to prevent activation.
