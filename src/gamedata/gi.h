@@ -38,6 +38,7 @@
 #include "zstring.h"
 #include "name.h"
 #include "screenjob.h"
+#include "doomtype.h"
 
 // Flags are not user configurable and only depend on the standard IWADs
 enum
@@ -217,6 +218,7 @@ struct gameinfo_t
 	bool nomergepickupmsg;
 	bool mHideParTimes;
 	CutsceneDef IntroScene;
+	ELightMode LightModeFromGameinfo = ELightMode::NotSet;
 
 	const char *GetFinalePage(unsigned int num) const;
 };
