@@ -49,6 +49,7 @@
 #include "texturemanager.h"
 #include "actorinlines.h"
 #include "g_levellocals.h"
+#include "gi.h"
 
 EXTERN_CVAR(Float, r_visibility)
 CVAR(Bool, gl_bandedswlight, false, CVAR_ARCHIVE)
@@ -119,6 +120,7 @@ HWDrawInfo *HWDrawInfo::StartDrawInfo(FLevelLocals *lev, HWDrawInfo *parent, FRe
 {
 	HWDrawInfo *di = di_list.GetNew();
 	di->Level = lev;
+	di->GameInfo = &gameinfo;
 	di->StartScene(parentvp, uniforms);
 	return di;
 }
@@ -146,7 +148,7 @@ void HWDrawInfo::StartScene(FRenderViewpoint &parentvp, HWViewpointUniforms *uni
 	rClipper->amRadar = true;
 
 	Viewpoint = parentvp;
-	lightmode = getRealLightmode(Level, true);
+	lightmode = getRealLightmode(Level, true, GameInfo->LightModeFromGameinfo);
 
 	if (uniforms)
 	{

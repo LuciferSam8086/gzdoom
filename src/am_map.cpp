@@ -71,6 +71,8 @@
 #include "d_buttons.h"
 #include "texturemanager.h"
 
+#include "gi.h"
+
 
 //=============================================================================
 //
@@ -2020,8 +2022,9 @@ void DAutomap::drawSubsectors()
 	FColormap colormap;
 	PalEntry flatcolor;
 	mpoint_t originpt;
+	gameinfo_t *GameInfo = &gameinfo;
 
-	auto lm = getRealLightmode(Level, false);
+	auto lm = getRealLightmode(Level, false,GameInfo->LightModeFromGameinfo);
 	bool softlightramp = !V_IsHardwareRenderer() || lm == ELightMode::Doom || lm == ELightMode::DoomDark;
 
 	auto &subsectors = Level->subsectors;

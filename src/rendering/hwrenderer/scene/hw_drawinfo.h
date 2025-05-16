@@ -9,6 +9,7 @@
 #include "v_video.h"
 #include "hw_weapon.h"
 #include "hw_drawlist.h"
+#include "gi.h"
 
 enum EDrawMode
 {
@@ -139,6 +140,7 @@ struct HWDrawInfo
 	ELightMode lightmode;
 
 	FLevelLocals *Level;
+	gameinfo_t *GameInfo;
 	HWDrawInfo * outer = nullptr;
 	int FullbrightFlags;
 	std::atomic<int> spriteindex;
