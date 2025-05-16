@@ -167,7 +167,7 @@ ELightMode getRealLightmode(FLevelLocals* Level, bool for3d, ELightMode LightMod
 	if (LightModeFromGameInfo != ELightMode::NotSet) return LightModeFromGameInfo;
 	// 3) if the user sets gl_maplightmode, this is being used.
 	if (gl_maplightmode != -1) return (ELightMode)*gl_maplightmode;
-	// 3) if not for 3D use lightmode Doom. This is for the automap where the software light modes do not work
+	// 4) if not for 3D use lightmode Doom. This is for the automap where the software light modes do not work
 	if (!for3d) return ELightMode::Doom;
 	// otherwise use lightmode Doom or software lighting based on user preferences.
 	if (gl_lightmode == 1) return ELightMode::ZDoomSoftware;
