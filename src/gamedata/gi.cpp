@@ -79,6 +79,7 @@ DEFINE_FIELD_X(GameInfoStruct, gameinfo_t, defaultdropstyle)
 DEFINE_FIELD_X(GameInfoStruct, gameinfo_t, normforwardmove)
 DEFINE_FIELD_X(GameInfoStruct, gameinfo_t, normsidemove)
 DEFINE_FIELD_X(GameInfoStruct, gameinfo_t, mHideParTimes)
+DEFINE_FIELD_X(GameInfoStruct, gameinfo_t, LightModeFromGameinfo)
 
 const char *GameNames[17] =
 {
@@ -369,6 +370,21 @@ void FMapInfoParser::ParseGameInfo()
 			sc.MustGetToken(TK_StringConst);
 			gameinfo.Dialogue = sc.String;
 			gameinfo.AddDialogues.Clear();
+		}
+		else if (nextKey.CompareNoCase("lightmode") == 0) 
+		{
+			
+			sc.MustGetNumber();
+			//sc.ScriptMessage("hey vsauce! %d", sc.Number);
+			if (sc.Number == 8 || sc.Number == 16) gameinfo.LightModeFromGameinfo = ELightMode::NotSet;
+			else if (sc.Number >= 0 && sc.Number < 5)
+			{
+				gameinfo.LightModeFromGameinfo = (ELightMode)sc.Number;
+			}
+			else
+			{
+				sc.ScriptMessage("Invalid light mode %d", sc.Number);
+			}
 		}
 
 		// Insert valid keys here.

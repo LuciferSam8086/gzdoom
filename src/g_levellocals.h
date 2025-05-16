@@ -58,6 +58,7 @@
 #include "doom_levelmesh.h"
 #include "p_visualthinker.h"
 #include <memory>
+#include "doomtype.h"
 
 struct FGlobalDLightLists
 {
@@ -979,4 +980,4 @@ inline TArrayView<FLevelLocals *> AllLevels()
 	return TArrayView<FLevelLocals *>(&primaryLevel, 1);
 }
 
-ELightMode getRealLightmode(FLevelLocals* Level, bool for3d);
+ELightMode getRealLightmode(FLevelLocals* Level, bool for3d, ELightMode LightModeFromGameInfo);
