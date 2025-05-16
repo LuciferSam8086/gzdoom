@@ -375,7 +375,6 @@ void FMapInfoParser::ParseGameInfo()
 		{
 			
 			sc.MustGetNumber();
-			//sc.ScriptMessage("hey vsauce! %d", sc.Number);
 			if (sc.Number == 8 || sc.Number == 16) gameinfo.LightModeFromGameinfo = ELightMode::NotSet;
 			else if (sc.Number >= 0 && sc.Number < 5)
 			{
