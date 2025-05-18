@@ -232,6 +232,12 @@ bool M_SetSpecialMenu(FName& menu, int param)
 		// Now we can finally start the game. Ugh...
 		LastSkill = param;
 		NewGameStartupInfo.Skill = param;
+		if (true) {
+			M_StartMessage("hello world?", 0, NAME_StartgameConfirmed);
+			
+			//return false;
+		}
+		
 		[[fallthrough]];
 	case NAME_StartgameConfirmed:
 
